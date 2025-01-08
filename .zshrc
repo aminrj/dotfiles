@@ -31,10 +31,34 @@ source $ZSH/oh-my-zsh.sh
 # Activate autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+
+# Directories
+
+export REPOS="$HOME/Repos"
+export NOTES="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/My-notes"
+export GITUSER="mischavandenburg"
+export GHREPOS="$REPOS/github.com/$GITUSER"
+export DOTFILES="$GHREPOS/dotfiles"
+export LAB="$GHREPOS/lab"
+export SCRIPTS="$DOTFILES/scripts"
+export ICLOUD="$HOME/icloud"
+export ZETTELKASTEN="$HOME/Zettelkasten"
+
 # Aliases
 alias python=python3
 alias n=npm
 alias v=nvim
+
+# Repos
+
+alias note='cd $NOTES'
+alias lab='cd $LAB'
+alias dot='cd $GHREPOS/dotfiles'
+alias repos='cd $REPOS'
+alias ghrepos='cd $GHREPOS'
+alias gr='ghrepos'
+alias cdgo='cd $GHREPOS/go/'
+alias rob='cd $REPOS/github.com/rwxrob'
 
 #compdef kubectl
 compdef _kubectl kubectl
