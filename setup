@@ -45,7 +45,7 @@ common_items=(
   "k9s/skin.yml:$XDG_CONFIG_HOME/k9s/skin.yml"
   ".inputrc:$HOME/.inputrc"
   ".tmux.conf:$HOME/.tmux.conf"
-  "nvim:$HOME/nvim"
+  "nvim:$XDG_CONFIG_HOME/nvim"
   "skhdrc:$XDG_CONFIG_HOME/skhd/skhdrc"
   ".zprofile:$HOME/.zprofile"
   ".zshrc:$HOME/.zshrc"

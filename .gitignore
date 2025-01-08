@@ -70,9 +70,6 @@
 .tcshrc
 .terraform.d/
 .thumbnails/
-.tmux.conf
-.tmux.conf.local
-.tmux/
 .vagrant.d/
 .venv/
 .viminfn.tmp
@@ -144,3 +141,4 @@ src/
 vimwiki
 .vim/
 .Trash/
+.tmux/
