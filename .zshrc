@@ -28,6 +28,11 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting z)
 
 source $ZSH/oh-my-zsh.sh
 
+# NeoVim configuration files in ~/nvim rather than ~/.config/nvim
+export NVIM_APPNAME="nvim"
+export NVIM_HOME="$HOME/nvim"
+export XDG_CONFIG_HOME="$HOME"
+
 # Activate autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -425,3 +430,11 @@ RPROMPT='$('/opt/homebrew/bin/starship' prompt --right --terminal-width="$COLUMN
 PROMPT2="$(/opt/homebrew/bin/starship prompt --continuation)"
 alias docker=podman
 alias docker-compose=podman-compose
+
+# pnpm
+export PNPM_HOME="/Users/ARAJI/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
