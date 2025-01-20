@@ -39,15 +39,20 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Directories
 
-export REPOS="$HOME/Repos"
-export NOTES="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/My-notes"
-export GITUSER="mischavandenburg"
-export GHREPOS="$REPOS/github.com/$GITUSER"
-export DOTFILES="$GHREPOS/dotfiles"
-export LAB="$GHREPOS/lab"
+export REPOS="$HOME/git"
+export ZETTELKASTEN="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Zettelkasten"
+export GITUSER="aminrj"
+# export GHREPOS="$REPOS/github.com/$GITUSER"
+export DOTFILES="$HOME/dotfiles"
+# export LAB="$GHREPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export ICLOUD="$HOME/icloud"
-export ZETTELKASTEN="$HOME/Zettelkasten"
+
+# Link to Zettelkasten directory from home
+# Check if the symbolic link exists
+if [ ! -e ~/Zettelkasten ]; then
+  ln -sf "$ZETTELKASTEN" ~/Zettelkasten
+fi
 
 # Aliases
 alias python=python3
@@ -64,6 +69,9 @@ alias ghrepos='cd $GHREPOS'
 alias gr='ghrepos'
 alias cdgo='cd $GHREPOS/go/'
 alias rob='cd $REPOS/github.com/rwxrob'
+
+# Update the path to include my scripts folder
+export PATH="$PATH:/Users/ARAJI/scripts"
 
 #compdef kubectl
 compdef _kubectl kubectl
