@@ -61,7 +61,7 @@ alias v=nvim
 
 # Repos
 
-alias note='cd $NOTES'
+alias note='cd $ZETTELKASTEN'
 alias lab='cd $LAB'
 alias dot='cd $GHREPOS/dotfiles'
 alias repos='cd $REPOS'

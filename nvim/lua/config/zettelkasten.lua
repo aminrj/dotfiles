@@ -1,36 +1,84 @@
 local function create_and_open_zk_note()
-  -- Get the current line
-  local line = vim.api.nvim_get_current_line()
+  ----------------------------------------------------------------
+  -- 1) Adjust these paths as needed:
+  ----------------------------------------------------------------
+  local zettelkasten_root = "/Users/ARAJI/Library/Mobile Documents/iCloud~md~obsidian/Documents/Zettelkasten"
+  local inbox_subdir = "0-inbox"
 
-  -- Extract the title from between double square brackets
+  ----------------------------------------------------------------
+  -- 2) Get the current line and extract the [[title]]:
+  ----------------------------------------------------------------
+  local line = vim.api.nvim_get_current_line()
   local title = line:match("%[%[(.-)%]%]")
 
-  if title then
-    -- Construct and execute the zk command
-    local cmd = string.format('zk new --vim "%s"', title)
-    local output = vim.fn.system(cmd)
+  if not title or title == "" then
+    vim.notify("No title found between double square brackets", vim.log.levels.WARN)
+    return
+  end
 
-    -- Extract the file path from the output and clean it
-    local file_path = output:match("New note created: (.+)")
-    if file_path then
-      -- Remove null bytes, newlines, and trim whitespace
-      file_path = file_path:gsub("%z", ""):gsub("\n", ""):gsub("^%s*(.-)%s*$", "%1")
+  ----------------------------------------------------------------
+  -- 3) Sanitize the title to create a safe filename:
+  --    - Convert to lowercase
+  --    - Replace groups of non-alphanumeric/underscore/dash with a single dash
+  --    - Remove leading/trailing dashes
+  --    - (Optionally) append '.md' if you want explicit extensions
+  ----------------------------------------------------------------
+  local sanitized_filename = title
+    :lower() -- make lowercase
+    :gsub("%s+", "-") -- replace spaces with dashes
+    :gsub("[^%w%-_]", "-") -- replace invalid chars with dashes
+    :gsub("%-+", "-") -- merge consecutive dashes
+    :gsub("^%-", "") -- remove leading dash if any
+    :gsub("%-$", "") -- remove trailing dash if any
 
-      -- Open the file in a new buffer without changing the current window layout
-      vim.cmd("badd " .. vim.fn.fnameescape(file_path))
-      local bufnr = vim.fn.bufnr(file_path)
+  -- Optionally add extension (remove this line if zk already adds .md automatically):
+  sanitized_filename = sanitized_filename .. ".md"
 
-      -- Switch to the new buffer in the current window
-      vim.api.nvim_set_current_buf(bufnr)
+  ----------------------------------------------------------------
+  -- 4) Build the `zk new` command:
+  --    Passing the subdir (positional arg) for "0-inbox"
+  --    `--notebook-dir` to specify your main ZK folder
+  --    `-t` (or `--title`) for the note's title
+  --    `--id` for the desired filename
+  --    `-p` so it prints only the newly created file path
+  ----------------------------------------------------------------
+  local cmd = string.format(
+    "zk new %q --notebook-dir=%q -t %q --id=%q -p",
+    inbox_subdir,
+    zettelkasten_root,
+    title,
+    sanitized_filename
+  )
 
-      print("Created and opened new note: " .. title)
-      print("File path: " .. file_path) -- Debug print
-    else
-      print("Failed to create note: " .. title)
-      print("Command output: " .. output)
-    end
+  ----------------------------------------------------------------
+  -- 5) Execute the command and read its output (which should be the note’s path)
+  ----------------------------------------------------------------
+  local output = vim.fn.system(cmd)
+
+  -- Clean up the path (remove newlines, carriage returns, etc.)
+  local file_path = output:gsub("\r", ""):gsub("\n", ""):gsub("^%s*(.-)%s*$", "%1")
+
+  ----------------------------------------------------------------
+  -- 6) Check if we got a valid path:
+  ----------------------------------------------------------------
+  if file_path == "" then
+    vim.notify("Failed to create note: " .. title .. "\nCommand output:\n" .. output, vim.log.levels.ERROR)
+    return
+  end
+
+  ----------------------------------------------------------------
+  -- 7) Open the newly created note in Neovim:
+  ----------------------------------------------------------------
+  vim.cmd("badd " .. vim.fn.fnameescape(file_path))
+  local bufnr = vim.fn.bufnr(file_path)
+  if bufnr > 0 then
+    vim.api.nvim_set_current_buf(bufnr)
+    vim.notify(
+      "Created and opened new note:\nTitle: " .. title .. "\nFilename: " .. sanitized_filename,
+      vim.log.levels.INFO
+    )
   else
-    print("No title found between double square brackets")
+    vim.notify("Could not open new note buffer:\n" .. file_path, vim.log.levels.ERROR)
   end
 end
 
