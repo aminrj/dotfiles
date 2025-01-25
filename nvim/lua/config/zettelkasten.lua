@@ -32,7 +32,7 @@ local function create_and_open_zk_note()
     :gsub("%-$", "") -- remove trailing dash if any
 
   -- Optionally add extension (remove this line if zk already adds .md automatically):
-  sanitized_filename = sanitized_filename .. ".md"
+  -- sanitized_filename = sanitized_filename .. ".md"
 
   ----------------------------------------------------------------
   -- 4) Build the `zk new` command:

@@ -57,3 +57,8 @@ vim.keymap.set("n", "<leader>hy", "i{{< youtube id >}}<Esc>", { desc = "Hugo You
 
 -- This will toggle [ ] to [x] with <leader>tt.
 vim.api.nvim_set_keymap("n", "<leader>tt", "mz^f[lc x<ESC>`z", { noremap = true, silent = true })
+
+-- Follow link in notes
+vim.keymap.set("n", "<leader>tf", function()
+  require("telekasten").follow_link()
+end, { desc = "Follow Telekasten link" })
