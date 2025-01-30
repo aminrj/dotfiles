@@ -143,3 +143,7 @@ vimwiki
 .Trash/
 .tmux/
 Zettelkasten
+containers/podman/machine/applehv
+containers/podman-connections.json
+containers/podman-connections.json.lock
+~/.oh-my-tmux

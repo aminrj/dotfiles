@@ -40,8 +40,7 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Directories
 
 export REPOS="$HOME/git"
-# export ZETTELKASTEN="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Zettelkasten"
-export ZETTELKASTEN="$HOME/Library/CloudStorage/Dropbox/Zettelkasten"
+export ZETTELKASTEN="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Zettelkasten"
 export GITUSER="aminrj"
 # export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$HOME/dotfiles"
