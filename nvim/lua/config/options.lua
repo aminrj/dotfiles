@@ -42,3 +42,34 @@ opt.linebreak = true
 vim.g.lazygit_config = false
 
 vim.g.snacks_animate = false
+
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+-- Markdown preview enhanced
+-- vim.g.mkdp_browser = "firefox" -- Change this to your preferred browser
+-- vim.g.mkdp_preview_options = {
+--   mkit = {},
+--   katex = {},
+--   uml = {},
+--   maid = {},
+--   disable_sync_scroll = 0,
+--   sync_scroll_type = "middle",
+--   hide_yaml_meta = 1,
+--   sequence_diagrams = {},
+--   flowchart_diagrams = {},
+--   content_editable = false,
+--   disable_filename = 0,
+--   toc = {},
+--   revealjs = {
+--     theme = "black", -- You can use 'white', 'black', 'league', etc.
+--     transition = "slide", -- Choose from 'none', 'fade', 'slide', 'convex', 'concave', 'zoom'
+--     width = 1280,
+--     height = 720,
+--     controls = true,
+--     progress = true,
+--     history = true,
+--     keyboard = true,
+--     overview = true,
+--     center = true,
+--   },
+-- }

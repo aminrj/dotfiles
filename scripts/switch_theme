@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Define iTerm2 color profiles for light and dark modes
+DARK_PROFILE="Gruvbox Dark"
+LIGHT_PROFILE="Gruvbox Light"
+
+# Store the last background setting in a temp file
+THEME_FILE="/tmp/current_background"
+
+if [ -f "$THEME_FILE" ]; then
+  LAST_THEME=$(cat "$THEME_FILE")
+else
+  LAST_THEME="dark" # Default to dark if the file doesn't exist
+fi
+
+# Toggle the background setting
+if [ "$LAST_THEME" == "dark" ]; then
+  NEW_THEME="light"
+  ITERM_PROFILE=$LIGHT_PROFILE
+else
+  NEW_THEME="dark"
+  ITERM_PROFILE=$DARK_PROFILE
+fi
+
+# Save the new theme state
+echo "$NEW_THEME" >"$THEME_FILE"
+
+# Apply iTerm2 color preset
+osascript -e "tell application \"iTerm2\" to tell current session of current window to set profile to \"$ITERM_PROFILE\""
+
+# Update Neovim background (only if Neovim is running)
+if pgrep -x "nvim" >/dev/null; then
+  NVIM_CMD="lua vim.o.background='$NEW_THEME'"
+  nvim --server /tmp/nvim-server.pipe --remote-send "<Esc>:lua vim.o.background='$NEW_THEME'<CR>"
+fi
+
+echo "Switched background to: $NEW_THEME ($ITERM_PROFILE)"

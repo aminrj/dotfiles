@@ -32,6 +32,8 @@ source $ZSH/oh-my-zsh.sh
 export NVIM_APPNAME="nvim"
 export NVIM_HOME="$HOME/nvim"
 export XDG_CONFIG_HOME="$HOME"
+# This allows external scripts to send commands.
+export NVIM_LISTEN_ADDRESS=/tmp/nvim-server.pipe
 
 # Activate autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -436,8 +438,10 @@ setopt promptsubst
 PROMPT='$('/opt/homebrew/bin/starship' prompt --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
 RPROMPT='$('/opt/homebrew/bin/starship' prompt --right --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
 PROMPT2="$(/opt/homebrew/bin/starship prompt --continuation)"
-alias docker=podman
-alias docker-compose=podman-compose
+# alias docker=podman
+# alias docker-compose=podman-compose
+# Use podman machine for docker too
+# export DOCKER_HOST=unix:///var/run/docker.sock
 
 # pnpm
 export PNPM_HOME="/Users/ARAJI/Library/pnpm"
