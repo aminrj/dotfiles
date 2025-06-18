@@ -150,3 +150,8 @@ containers/podman-connections.json.lock
 gh
 configstore
 .gitconfig-work
+.azcopy
+argocd
+helm
+k9s
+models/foundation-sec

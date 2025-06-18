@@ -33,7 +33,7 @@ export NVIM_APPNAME="nvim"
 export NVIM_HOME="$HOME/nvim"
 export XDG_CONFIG_HOME="$HOME"
 # This allows external scripts to send commands.
-export NVIM_LISTEN_ADDRESS=/tmp/nvim-server.pipe
+export NVIM_LISTEN_ADDRESS=/tmp/nvim-server-$$.pipe
 
 # Activate autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -452,3 +452,12 @@ esac
 # pnpm end
 
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/ARAJI/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+export DOCKER_HOST=unix:///Users/ARAJI/.rd/docker.sock
+
+
+export JAVA_HOME=$(/usr/libexec/java_home -v21)
+export PATH=$JAVA_HOME/bin:$PATH

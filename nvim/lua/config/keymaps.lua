@@ -2,6 +2,23 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 --
+
+-- toggle diagnostic text and signs on and off
+vim.g.diagnostics_enabled = true
+function ToggleDiagnostics()
+  vim.g.diagnostics_enabled = not vim.g.diagnostics_enabled
+  vim.diagnostic.config({
+    virtual_text = vim.g.diagnostics_enabled,
+    signs = vim.g.diagnostics_enabled,
+  })
+  if vim.g.diagnostics_enabled then
+    print("Diagnostics: ON")
+  else
+    print("Diagnostics: OFF")
+  end
+end
+vim.api.nvim_set_keymap("n", "<leader>td", "<cmd>lua ToggleDiagnostics()<CR>", { noremap = true, silent = true })
+
 vim.keymap.set("n", "<leader>p", '<cmd>lua require("cmp").setup { enabled = true }<cr>', { desc = "Enable completion" })
 vim.keymap.set(
   "n",
@@ -10,6 +27,11 @@ vim.keymap.set(
   { desc = "Disable completion" }
 )
 
+vim.api.nvim_set_keymap("n", "<leader>sp", [[:lua FixLastSpellingError()<CR>]], { noremap = true, silent = true })
+
+function FixLastSpellingError()
+  vim.cmd("normal! mm[s1z=`m")
+end
 -- map esc to jk for laptop use
 -- vim.keymap.set("i", "jk", "<Esc>", { desc = "Escape jk" })
 
